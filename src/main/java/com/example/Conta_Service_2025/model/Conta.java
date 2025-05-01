@@ -38,8 +38,8 @@ public class Conta {
     @Column
     private BigDecimal saldo = BigDecimal.ZERO;
 
- //   @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, orphanRemoval = true)
-  //  private List<Pix> historicoPix = new ArrayList<>();
+    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Pix> historicoPix = new ArrayList<>();
 
     public void sacar(BigDecimal valor){ saldo = this.saldo.subtract(valor);}
 

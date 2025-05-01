@@ -2,7 +2,9 @@ package com.example.Conta_Service_2025.configuracao;
 
 import com.example.Conta_Service_2025.exception.ContaExistenteException;
 import com.example.Conta_Service_2025.exception.ContaNaoExistenteException;
+import com.example.Conta_Service_2025.exception.PixNegativoNaoException;
 import com.example.Conta_Service_2025.exception.SaldoInsuficienteException;
+import com.example.Conta_Service_2025.model.Pix;
 import org.springframework.http.*;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -55,4 +57,12 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         problemDetail.setType(URI.create("http://localhost/9000/doc/saldo-insuficiente"));
         return problemDetail;
     }
+    @ExceptionHandler(PixNegativoNaoException.class)
+    private ProblemDetail handlerPixNegativoNao(PixNegativoNaoException ex){
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        problemDetail.setTitle("Pix inválido.");
+        problemDetail.setType(URI.create("http://localhost/9000/doc/pix-negativo"));
+        return problemDetail;
+    }
+
 }
